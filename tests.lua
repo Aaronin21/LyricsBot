@@ -4,10 +4,12 @@ local MoreCensoredWords = {
     "couple", "screw", "screwed", "cup", "pour", "heroin", "heroine", "herpes", "crack", "ecstasy", "veins", "pain", "gargle", "gang",
     "homixide", "homicide", "pourin", "pouring", "badass", "gown", "suck", "motherfucking", "motherfuckin", "motherfucker", "tattoo", "tats", "i live", "lung",
     "shot him", "killed him", "kill him", "devil", "satan", "rob", "boys", "meet me", "luv", "give me head", "fine as", "marry", "marriage", "girlfriend", "boyfriend", "suck it", "pronouns",
-    "warcrime", "war", "crime", "triple 6", "666", "batty", "bauty", "butt", "fill me up", "cheating", "cheat", "cheated", "goddamn", "god damn", "slut", "bae", "whore", "eat you", "fag", "faggot",
+    "warcrime", "war", "crime", "triple 6", "666", "batty", "bauty", "butt", "fill me up", "cheating", "cheat", "cheated", "goddamn", 
+    "god damn", "slut", "bae", "whore", "eat you", "fag", "faggot",
     "baby mama", "shawty", "location", "lady", "wet", "ass", "thongs", "thong", "baby", "married", "queen", "queef", "bando", "stove", "cook", "cooked", "cooking",
-    "restrain", "restrained", "banging", "bang", "like", "shots", "desperate", "molly", "under", "slave", "girls", "smoking", "relapsed", "relapse", "boyz", "big", "grass", "ritalin", "abort",
-    "abortion", "aborted", "bride", "wife", "suicide", "intercourse", "cigarette", "percoset", "perc"
+    "restrain", "restrained", "banging", "bang", "like", "shots", "desperate", "molly", "under", "slave", "girls", "smoking", "relapsed", "relapse", "boyz",
+    "big", "grass", "ritalin", "abort","abortion", "aborted", "bride", "wife", "suicide", "intercourse", "cigarette", "percoset", "perc", "strip", "strip club", "gram", "grams",
+    "ride", "pot", "caress", "thot", "breast", "breasts"
 }
 
 
@@ -401,9 +403,11 @@ end
 local button = lib:CreateButton(window, "🎶 Sing It! 🎶", function()
     SingingSong = false
     if ShowArt == true then
-        task.spawn(drawImage)
+        task.spawn(drawImageAt)
     end
     task.spawn(Notify, "🎶 Now Playing: "..textBox2.Text.." 🎶", " by "..textBox.Text, 3)
+    local x526 = textBox2.Text
+    local x527 = textBox.Text
     a_NAME = replaceSpaces(textBox.Text)
     s_TITLE = replaceSpaces(textBox2.Text)
     t_STAMP = textBox3.Text
@@ -415,6 +419,7 @@ local button = lib:CreateButton(window, "🎶 Sing It! 🎶", function()
             textBox3.Text = t_STAMP
         end
         task.wait(3)
+        sendMsg(censorText("[ Lyrics Bot Started ] Playing: "..x526.." by: "..x527))
         SingingSong = true
         if method == 1 then
             pm()
