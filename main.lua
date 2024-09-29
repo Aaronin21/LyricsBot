@@ -4,7 +4,10 @@ local MoreCensoredWords = {
     "couple", "screw", "screwed", "cup", "pour", "heroin", "heroine", "herpes", "crack", "ecstasy", "veins", "pain", "gargle", "gang",
     "homixide", "homicide", "pourin", "pouring", "badass", "gown", "suck", "motherfucking", "motherfuckin", "motherfucker", "tattoo", "tats", "i live", "lung",
     "shot him", "killed him", "kill him", "devil", "satan", "rob", "boys", "meet me", "luv", "give me head", "fine as", "marry", "marriage", "girlfriend", "boyfriend", "suck it", "pronouns",
-    "warcrime", "war", "crime", "triple 6", "666", "batty", "bauty", "butt", "fill me up", "cheating", "cheat", "cheated", "goddamn", "god damn", "slut", "bae", "whore", "eat you", "fag", "faggot"
+    "warcrime", "war", "crime", "triple 6", "666", "batty", "bauty", "butt", "fill me up", "cheating", "cheat", "cheated", "goddamn", "god damn", "slut", "bae", "whore", "eat you", "fag", "faggot",
+    "baby mama", "shawty", "location", "lady", "wet", "ass", "thongs", "thong", "baby", "married", "queen", "queef", "bando", "stove", "cook", "cooked", "cooking",
+    "restrain", "restrained", "banging", "bang", "like", "shots", "desperate", "molly", "under", "slave", "girls", "smoking", "relapsed", "relapse", "boyz", "big", "grass", "ritalin", "abort",
+    "abortion", "aborted", "bride", "wife", "suicide", "intercourse", "baes", "hit", "from the back", "lay", "goon", "goons", "popped"
 }
 
 
@@ -242,7 +245,7 @@ local function censorText(text)
         "handjob", "ecchi", "hentai", "pussy", "anal", "geeked", "guns", "blowing", "drank", "drugs", "drug", "kill", "jump", "weed",
         "retarded", "retard", "girl", "body", "all night", "love", "valentine", "geek", "fucked", "bitched", "babygirl", "cocaine",
         "baby girl", "ouh", "ou", "lovin", "loving", "address", "pain", "suck a", "xanax", "sexual", "metrosexual", "kid", "fall in love", "bitched", "dicked",
-        "date", "hoes", "freak", "as hell", "geeked up", "hate", "hating", "hatin", "address", "atlanta", "high", "live", "type", "shi", "pimp",
+        "date", "hoes", "freak", "as hell", "geeked up", "hate", "hating", "hatin", "address", "atlanta", "high", "type", "shi", "pimp",
         "pour", "glock", "suck my dick", "die", "cock", "sucking my cock", "sucking my dick", "suck my cock", "fucking", "fuckin", "OD", "pedo", "nigger"
     }
     table.move(MoreCensoredWords, 1, #MoreCensoredWords, #cussWords + 1, cussWords)
@@ -335,11 +338,12 @@ local pmm = function()
             for _, line in ipairs(lines) do
                 if SingingSong == true then
                     local cleanedText = string.gsub(line, "%b()", "")
+                    cleanedText = string.gsub(cleanedText, "%b[]", "")
                     cleanedText = string.gsub(cleanedText, "^%s*(.-)%s*$", "%1")
                     if cleanedText ~= "" then
                         sendMsg("🎶 " .. censorText(cleanedText) .. " 🎶")
-                        local randomDelay = math.random()
-                        task.wait(4 + randomDelay)
+                        local randomDelay = math.random() or ((math.floor(math.pi)) * 0.1)
+                        task.wait(3 + randomDelay)
                     end
                 else
                     return
