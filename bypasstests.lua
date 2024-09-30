@@ -170,6 +170,9 @@ end
 
 
 
+
+
+
 ----------------
 local s_TITLE
 local a_NAME
@@ -284,6 +287,20 @@ local pm = function()
         local previousTime = 0
         local previousLine = ""
         local repeatCount = 1
+
+        local function spedcharacters(text)
+            local result = ""
+            for i = 1, #text do
+                local char = text:sub(i, i)
+                if char == " " then
+                    result = result .. ""
+                else
+                    result = result .. char .. "￴"
+                end
+            end
+            return result
+        end
+
         local x3d = coroutine.create(function()
             for line in string.gmatch(lyrics, "[^\r\n]+") do
                 local time, text = string.match(line, "%[(%d+:%d+%.%d+)%]%s*(.+)")
@@ -293,6 +310,7 @@ local pm = function()
                         local cleanedText = string.gsub(text, "%b()", "")
                         cleanedText = string.gsub(cleanedText, "^%s*(.-)%s*$", "%1")
                         if cleanedText ~= "" then
+                            cleanedText = spedcharacters(cleanedText)
                             if cleanedText == previousLine then
                                 repeatCount = repeatCount + 1
                             else
@@ -336,6 +354,7 @@ local pm = function()
         warn("failed with status code: " .. response.StatusCode)
     end
 end
+
 
 
 local pmm = function()
