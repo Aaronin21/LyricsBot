@@ -204,8 +204,7 @@ local replaceSpaces = function(str)
     return str
 end
 local url
-coroutine.resume(
-    coroutine.create(function()
+task.spawn(function()
         while true and game:GetService('RunService').Heartbeat:Wait() do
             -- Ensure s_TITLE and a_NAME are not nil
             if (advanced_T == false and s_TITLE and a_NAME and method == 1) then
@@ -218,7 +217,6 @@ coroutine.resume(
             end
         end
     end)
-)
 
 local uSettings = {
     PlaybackSpeed = 1,
@@ -284,7 +282,8 @@ local pm = function()
         local lyrics = response.Body
         local previousTime = 0
         --y:Play()
-        local x3d = coroutine.create(function()
+        --[[]local x3d = coroutine.create(function()end)]]
+        task.spawn(function()
             for line in string.gmatch(lyrics, "[^\r\n]+") do
                 local time, text = string.match(line, "%[(%d+:%d+%.%d+)%]%s*(.+)")
                 if time and text then
@@ -314,7 +313,7 @@ local pm = function()
                 end
             end
         end)
-        coroutine.resume(x3d)
+        --coroutine.resume(x3d)
     else
         warn("failed with status code: " .. response.StatusCode)
     end
