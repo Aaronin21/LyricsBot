@@ -232,10 +232,16 @@ local h
 
 local sendMsg = function(cc)
     local msg = cc;
-    if game:GetService("TextChatService").ChatInputBarConfiguration.TargetTextChannel then
-        game:GetService("TextChatService").ChatInputBarConfiguration.TargetTextChannel:SendAsync(msg);
+    local filteredMessage = game:GetService("Chat"):FilterStringForBroadcast(msg, plr)
+    local tagged = filteredMessage ~= msg
+    if tagged then
+        print("Message tagged :(")
     else
-        game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg, "All")
+        if game:GetService("TextChatService").ChatInputBarConfiguration.TargetTextChannel then
+            game:GetService("TextChatService").ChatInputBarConfiguration.TargetTextChannel:SendAsync(msg);
+        else
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg, "All")
+        end
     end
 end
 
@@ -295,7 +301,7 @@ local pm = function()
                 if char == " " then
                     result = result .. ""
                 else
-                    result = result .. char .. "￴"
+                    result = result .. char .. "￴￴"
                 end
             end
             return result
@@ -372,6 +378,25 @@ local pmm = function()
         if lyrics == nil then
             warn('no lyrics were found?!?!??!?')
         else
+            local function spedcharacters(text)
+                local result = ""
+                for i = 1, #text do
+                    local char = text:sub(i, i)
+                    if char == " " then
+                        result = result .. ""
+                    else
+                        local al = math.random(1, 5)
+                        if al == 1 then
+                            result = result .. char .. "￴"
+                        elseif al > 1 and al <= 4 then
+                            result = result .. char .. "￴￴"
+                        else
+                            result = result .. char .. "￴￴￴"
+                        end
+                    end
+                end
+                return result
+            end
             local lines = string.split(lyrics, "\n")
             local previousLine = ""
             local repeatCount = 1
@@ -383,6 +408,7 @@ local pmm = function()
                     cleanedText = string.gsub(cleanedText, "^%s*(.-)%s*$", "%1")
                     
                     if cleanedText ~= "" then
+                        cleanedText = spedcharacters(cleanedText)
                         if cleanedText == previousLine then
                             repeatCount = repeatCount + 1
                         else

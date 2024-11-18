@@ -1,16 +1,19 @@
-local MoreCensoredWords = {
-    "cum", "nut", "suck dick", "hated", "greenin", "greening out", "greening", "codeine", "ride", "on me", "lungs", "burn my lungs",
+if not getgenv().a123b then
+    getgenv().a123b = {
+       "cum", "nut", "suck dick", "hated", "greenin", "greening out", "greening", "codeine", "ride", "on me", "lungs", "burn my lungs",
     "opium", "dope", "coke", "sniffing", "blunt", "blunts", "roll", "stiletto", "stilettos", "bih", "kiss", "hug", "lean",
     "couple", "screw", "screwed", "cup", "pour", "heroin", "heroine", "herpes", "crack", "ecstasy", "veins", "pain", "gargle", "gang",
     "homixide", "homicide", "pourin", "pouring", "badass", "gown", "suck", "motherfucking", "motherfuckin", "motherfucker", "tattoo", "tats", "i live", "lung",
     "shot him", "killed him", "kill him", "devil", "satan", "rob", "boys", "meet me", "luv", "give me head", "fine as", "marry", "marriage", "girlfriend", "boyfriend", "suck it", "pronouns",
-    "warcrime", "war", "crime", "triple 6", "666", "batty", "bauty", "butt", "fill me up", "cheating", "cheat", "cheated", "goddamn", "god damn", "slut", "bae", "whore", "eat you", "fag", "faggot",
+    "warcrime", "war", "crime", "triple 6", "666", "batty", "bauty", "butt", "fill me up", "cheating", "cheat", "cheated", "goddamn", 
+    "god damn", "slut", "bae", "whore", "eat you", "fag", "faggot",
     "baby mama", "shawty", "location", "lady", "wet", "ass", "thongs", "thong", "baby", "married", "queen", "queef", "bando", "stove", "cook", "cooked", "cooking",
-    "restrain", "restrained", "banging", "bang", "like", "shots", "desperate", "molly", "under", "slave", "girls", "smoking", "relapsed", "relapse", "boyz", "big", "grass", "ritalin", "abort",
-    "abortion", "aborted", "bride", "wife", "suicide", "intercourse", "baes", "hit", "from the back", "lay", "goon", "goons", "popped"
-}
-
-
+    "restrain", "restrained", "banging", "bang", "like", "shots", "desperate", "molly", "under", "slave", "girls", "smoking", "relapsed", "relapse", "boyz",
+    "big", "grass", "ritalin", "abort","abortion", "aborted", "bride", "wife", "suicide", "intercourse", "cigarette", "percoset", "perc", "strip", "strip club", "gram", "grams",
+    "ride", "pot", "caress", "thot", "breast", "breasts", "pill", "pills", "jerk", "alcohol"
+    }
+end
+local MoreCensoredWords = getgenv().a123b
 -- Add more words up here!
 
 
@@ -99,15 +102,13 @@ end)
 
 
 local function drawImageAtPosition(osX, osY)
-    local suck, res = pcall(function()
-        return request({
+    local respponse = request({
             Url = "https://lyrist.vercel.app/api/"..textBox.Text.."/"..textBox2.Text,
             Method = "GET"
         })
-    end)
-    if suck then
+    if respponse.StatusCode == 200 then
     local pixelSize = 2
-    local stuff = game:GetService("HttpService"):JSONDecode(res.Body)
+    local stuff = game:GetService("HttpService"):JSONDecode(respponse.Body)
     local directimglink = stuff.image
     local url1 = "https://biinou.serv00.net/image_to_pixel_data.php?url="..directimglink
     local success, response = pcall(function()
